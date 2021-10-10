@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <title>CSS3-3D-Image</title>
+        
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            
+            body {
+                width: 100vw;
+                height: 100vh;
+                background-image: linear-gradient(to bottom, #C6426E, #642B73);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                perspective: 1800px;
+            }
+            
+            #box {
+                background-color: #fff;
+                width: 600px;
+                border-radius: 25px;
+                padding: 25px;
+                box-shadow: 0px 10px 20px 20px rgb(0 0 0 / 17%);
+                transform-style: preserve-3d;
+                transform-origin: center center;
+            }
+            
+            .items {
+                display: flex;
+                justify-content: space-around;
+                margin-top: 2em;
+            }
+            
+            .item {
+                width: 175px;
+                height: 250px;
+                border-radius: 15px;
+                box-shadow: 5px 5px 20px -5px rgb(0 0 0 / 60%);
+                overflow: hidden;
+                position: relative;
+            }
+            
+            .bg {
+                position: absolute;
+                left: -50px;
+                top: -50px;
+                bottom: -50px;
+                right: -50px;
+            }
+            
+            .item:nth-child(1) .bg {
+                background: url("https://www.html5tricks.com/demo/css3-3d-lean-image/img/3dr_monobg.jpg") center/cover no-repeat;
+            }
+            
+            .item:nth-child(2) .bg {
+                background: url("https://www.html5tricks.com/demo/css3-3d-lean-image/img/3dr_spirited.jpg") center/cover no-repeat;
+            }
+            
+            .item:nth-child(3) .bg {
+                background: url("https://www.html5tricks.com/demo/css3-3d-lean-image/img/3dr_howlbg.jpg") center/cover no-repeat;
+            }
+            
+            img {
+                height: 110%;
+                position: relative;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div id="box">
+            <h3>Movies</h3>
+            <h1>Popular</h1>
+            <div class="items">
+                <div class="item">
+                    <div class="bg"></div>
+                    <img src="https://www.html5tricks.com/demo/css3-3d-lean-image/img/3dr_mono.png" />
+                </div>
+                <div class="item">
+                    <div class="bg"></div>
+                    <img src="https://www.html5tricks.com/demo/css3-3d-lean-image/img/3dr_chihiro.png" />
+                </div>
+                <div class="item">
+                    <div class="bg"></div>
+                    <img src="https://www.html5tricks.com/demo/css3-3d-lean-image/img/3dr_howlcastle.png" />
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            document.onmousemove = function (e) {
+                // 屏幕宽高
+                const S_w = window.innerWidth, S_h = window.innerHeight
+                // 中心点
+                const C_x = S_w / 2, C_y = S_h / 2
+                // 当前鼠标位置
+                const M_x = e.x, M_y = e.y
+                
+                
+                const Max_deg = 20
+                document.getElementById('box').style.transform = `rotateY(${Max_deg * (M_x - C_x) / C_x}deg) rotateX(${Max_deg * (M_y - C_y) / C_y}deg)`
+                
+                document.querySelectorAll('.bg').forEach(el => {
+                    el.style.backgroundPosition = `${9 * (M_x - C_x) / C_x}px ${9 * (C_y - M_y) / C_y}px`
+                })
+                
+                document.querySelectorAll('img').forEach(el => {
+                    el.style.transform = `translateX(${20 * (C_x - M_x) / C_x}px) translateY(${20 * (M_y - C_y) / C_y}px)`
+                })
+            }
+        </script>
+    </body>
+</html>
